@@ -8,7 +8,11 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5001;
 
-app.use(cors());
+
+app.use(cors({
+  origin: "https://thebookk.netlify.app/", // ✅ your actual Netlify domain
+  methods: ["GET", "POST"], // Add other methods if needed
+}));
 app.use(express.json());
 
 mongoose.connect(process.env.MONGO_URI, {
