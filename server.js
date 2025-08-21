@@ -15,13 +15,25 @@ const PORT = process.env.PORT || 5001;
 app.use(helmet());
 
 // CORS configuration
-app.use(cors({
-    origin: process.env.NODE_ENV === 'production' ?
-        ['https://maheshmanzar.com/'] :
-        ['http://localhost:3000', 'http://localhost:3001'],
-    credentials: true
-}));
+const allowedOrigins = [
+  "http://localhost:3000",   // for local dev
+  "https://maheshmanzar.com" // for your live site
+];
 
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      // allow requests with no origin (like curl, Postman)
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      } else {
+        return callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true,
+  })
+)
 // Rate limiting
 const limiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
