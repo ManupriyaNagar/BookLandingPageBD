@@ -17,7 +17,7 @@ app.use(helmet());
 // CORS configuration
 app.use(cors({
     origin: process.env.NODE_ENV === 'production' ?
-        ['https://yourdomain.com'] :
+        ['https://maheshmanzar.com/'] :
         ['http://localhost:3000', 'http://localhost:3001'],
     credentials: true
 }));
@@ -79,7 +79,8 @@ app.get('/health', (req, res) => {
 app.use('/api/book-orders', bookOrdersRoute);
 
 // 404 handler
-app.use('*', (req, res) => {
+// ✅ new
+app.use((req, res) => {
     res.status(404).json({
         message: 'Route not found',
         path: req.originalUrl

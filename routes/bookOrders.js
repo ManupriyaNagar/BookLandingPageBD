@@ -165,7 +165,7 @@ router.get('/stats', async (req, res) => {
 
         res.json({
             totalOrders,
-            totalCopies: totalCopies[0] ? .total || 0,
+            totalCopies: totalCopies[0] ?.total || 0,
             recentOrders,
             topCities,
             monthlyTrends
